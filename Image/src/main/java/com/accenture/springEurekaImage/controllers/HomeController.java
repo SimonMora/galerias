@@ -7,8 +7,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +32,6 @@ import io.swagger.annotations.ApiResponse;
 @RequestMapping("/")
 public class HomeController {
 
-	Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
 	@Autowired
 	private Environment env;
 	@Autowired
@@ -53,12 +49,10 @@ public class HomeController {
 			imageService.save(imagen);
 			imgJSON.put("error", 0);
 			imgJSON.put("result", "OK");
-			logger.info("La imagen fue guardada exitosamente");
 			return ResponseEntity.ok().body(imgJSON.toString());
 		} else {
 			imgJSON.put("error", 1);
 			imgJSON.put("result", "La imagen no puede ser null");
-			logger.info("La imagen no pudo ser guardada");
 			return ResponseEntity.ok().body(imgJSON.toString());
 		}
 	}
@@ -86,19 +80,16 @@ public class HomeController {
 				imageService.save(image);
 				putJson.put("error", 0);
 				putJson.put("result", "Nombre cambiado");
-				logger.info("Se pudo cambiar el nombre a la imagen");
 				return ResponseEntity.ok().body(putJson.toString());
 			} else {
 				putJson.put("error", 2);
 				putJson.put("result", "La imagen no existe en la galeria");
-				logger.error("No se pudo cambiar el nombre de la imagen");
 				return ResponseEntity.ok().body(putJson.toString());
 			}
 			
 		} else {
 			putJson.put("error", 1);
 			putJson.put("result", "La imagen no existe");
-			logger.error("No se pudo cambiar el nombre de la imagen");
 			return ResponseEntity.ok().body(putJson.toString());
 		}		
 	}
@@ -120,13 +111,6 @@ public class HomeController {
 			imgJSON.put("result", "La imagen no existe");
 			return ResponseEntity.ok().body(imgJSON.toString());
 		}
-	}
-	
-	@GetMapping("/echo") //Para ver si responde la API
-	public String echo (String mensaje) {
-		logger.info("Mensaje enviado exitosamente: " + mensaje);
-		
-		return mensaje;
 	}
 
 }

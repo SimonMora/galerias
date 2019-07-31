@@ -1,9 +1,11 @@
 package com.accenture.gallery.service;
 
-import org.springframework.http.ResponseEntity;
+import java.util.List;
+
+import com.accenture.gallery.entities.Image;
 
 public interface GalleryService {
 
-	public ResponseEntity<Object> findByGallery(Long galleryId); 
+	public List<Image> findByGallery(Long galleryId); 
 	
 }
