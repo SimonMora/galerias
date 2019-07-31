@@ -20,10 +20,6 @@ import com.accenture.gallery.repository.GalleryRepository;
 @RequestMapping("/")
 public class HomeController {
 	
-	@Autowired
-	private RestTemplate restTemplate;
-	@Autowired
-	private GalleryRepository gallRepo;
 	
 	@Autowired
 	private Environment env;
