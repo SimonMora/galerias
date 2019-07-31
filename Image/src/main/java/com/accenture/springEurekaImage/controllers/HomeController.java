@@ -1,7 +1,6 @@
 package com.accenture.springEurekaImage.controllers;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -12,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accenture.springEurekaImage.entities.Image;
-import com.accenture.springEurekaImage.repository.ImageRepository;
 import com.accenture.springEurekaImage.service.ImageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,10 +44,7 @@ public class HomeController {
 		JSONObject imgJSON = new JSONObject();
 		
 		if (img!=null) {
-			Image imagen = new Image();
-			imagen.setName(img.getName());
-			imagen.setUrl(img.getUrl());
-			imagen.setGalleryId(id);
+			Image imagen = new Image(img.getName(), img.getUrl(), id);
 			imageService.save(imagen);
 			imgJSON.put("error", 0);
 			imgJSON.put("result", "OK");
@@ -63,37 +58,52 @@ public class HomeController {
 		}
 	}
 	
-	@GetMapping("/images/{id}")
-	@ApiOperation(value = "Retrieve a specific image")
+	@GetMapping("/images/{id}") //Recibe la id de una galeria
+	@ApiOperation(value = "Retrieve images from a specific gallery")
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successful", response = Image.class))
-	public List<Image> getImagesByGallery(@PathVariable Long id) {
+	public ResponseEntity<Object> getImagesByGallery(@PathVariable Long id) throws JSONException {
 		
+		JSONObject response = new JSONObject();
+		JSONArray arrayImage = new JSONArray();
+
 		List<Image> images = imageService.findByGalleryId(id);
-		return images;
-	}	
+		if (images!=null) {
+			for (Image image : images) {
+				JSONObject toArray = new JSONObject();
+				
+				toArray.put("Url", image.getUrl());
+				toArray.put("Gallery Id", image.getGalleryId());
+				toArray.put("Id", image.getId());
+				toArray.put("Name", image.getName());
+				
+				arrayImage.put(toArray);
+			}
+
+			response.put("error", 0);
+			response.put("result", arrayImage);
+		} else {
+			response.put("error", 1);
+			response.put("result", "La galeria no tiene imagenes");
+		}
+		
+		return ResponseEntity.ok().body(response.toString());
+	}
 	
 	@PutMapping("/changeName/{id_img}")
 	@ApiOperation(value = "Change image name")
-	public ResponseEntity<Object> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img ) throws JSONException{
+	public ResponseEntity<Object> putChangeName(@PathVariable ("id_img") Long id_img, @RequestParam String name) throws JSONException{
 		
 		JSONObject putJson = new JSONObject();
 		Image image = imageService.findById(id_img);
 		
 		if (image!=null) {
 			
-			if(image.getGalleryId()!=null) {
-				image.setName(img.getName());
-				imageService.save(image);
-				putJson.put("error", 0);
-				putJson.put("result", "Nombre cambiado");
-				logger.info("Se pudo cambiar el nombre a la imagen");
-				return ResponseEntity.ok().body(putJson.toString());
-			} else {
-				putJson.put("error", 2);
-				putJson.put("result", "La imagen no existe en la galeria");
-				logger.error("No se pudo cambiar el nombre de la imagen");
-				return ResponseEntity.ok().body(putJson.toString());
-			}
+			image.setName(name);
+			imageService.save(image);
+			putJson.put("error", 0);
+			putJson.put("result", "Nombre cambiado");
+			logger.info("Se pudo cambiar el nombre a la imagen");
+			return ResponseEntity.ok().body(putJson.toString());
 			
 		} else {
 			putJson.put("error", 1);
@@ -125,63 +135,7 @@ public class HomeController {
 	@GetMapping("/echo") //Para ver si responde la API
 	public String echo (String mensaje) {
 		logger.info("Mensaje enviado exitosamente: " + mensaje);
-		
 		return mensaje;
 	}
 
 }
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	@GetMapping("/images")
-//	public ResponseEntity<Object> getImages() throws JSONException {
-//		List<Image> images = imageService.findAll();
-//		JSONObject obj = new JSONObject();
-//		JSONArray array = new JSONArray();
-//		JSONObject json = new JSONObject();
-//		for(Image img: images) {
-//			obj.put("title", img.getTitle());
-//			obj.put("url", img.getUrl());
-//			obj.put("id", img.getId());
-//			obj.put("gallery_id", img.getGallery_id());
-//			
-//			array.put(obj);
-//		}
-//		json.put("error",0);
-//		json.put("results", array);
-//		
-//				return ResponseEntity.ok().body(json.toString());
-//	}
-	
-//	@RequestMapping("/imagenes")
-//	public List<Images> getImagenes(){
-//		List<Images> images = Arrays.asList(
-//				new Images(1L,"This is Seiya","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSivYtxeq7nc1YXwqglLHxSIz8wC8qWm4yUk23PhWUFlIwl4PaBCw"),
-//				new Images(2L,"Shiryu: Caballero del Dragón","http://3.bp.blogspot.com/-kqyGNo6HBYY/UeCHb8QREvI/AAAAAAAALIQ/Gutp3BhWAvM/s400/XF32.jpg"),
-//				new Images(3L,"Andromeda y sus cadenas","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg7owBJ-yMubI6GXnC-UVZLGIUdKtaBptsHo0RTmQ6rKJV67iC"));
-//		return images;
-//	}
-	
-//	@PostMapping("/guardar")
-//	public ResponseEntity<Object> saveImage(@RequestBody Image imagen) throws JSONException{
-//
-//		Image unaimagen = new Image();
-//		JSONObject res= new JSONObject();
-//		
-//			if(imagen!=null) {
-//				
-//				unaimagen.setTitle(imagen.getTitle());
-//				unaimagen.setUrl(imagen.getUrl());
-//				unaimagen.setGallery_id(imagen.getGallery_id());
-//				imageService.save(unaimagen);
-//				System.out.println(unaimagen.getTitle());
-//				
-//				res.put("error", 0);
-//				res.put("result", "pudimos salvar tu imagen");
-//					
-//				
-//			}else {
-//				res.put("error", 1);
-//				res.put("result", "no pudimos salvar tu imagen");	
-//			}
-//		return ResponseEntity.ok().body(res.toString());
-//	}
-//}
