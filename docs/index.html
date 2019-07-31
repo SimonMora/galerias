@@ -20,7 +20,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Muestro de Adelantos en la semana</title>
+    <title>Galerías</title>
     <meta name="description" content="Explore impress.js in 3D" />
     <meta name="author" content="Henrik Ingo" />
     <link href="css/3D-rotations.css" rel="stylesheet" />
@@ -36,42 +36,56 @@
 
 
         <div id="overview" class="step overview" data-x="1350" data-y="100" data-z="100" data-scale="3" data-rotate-y="90">
-            <h1>Muestro de Adelantos en la semana</h1>
+            <h1>Galerías</h1>
+             
         </div>
         <div id="overview2" class="step overview" data-x="2018" data-y="106" data-z="3018" data-scale="2">
+             <p style="font-size: 2.5rem">Un proyecto de microservicios que contiene <strong>Eureka Server</strong> </p>
+           
           
         </div>
 
         <div id="step-1" class="step" data-x="0" data-y="0" data-z="0" data-goto-prev="step-8">
-            <p>Slide uno</p>
+        
+             <p>¿Cómo funciona?</p>
+          
+             <img style="width: 110%;" src="img/diagrama.png" alt="diagrama explicativo de api microservicios">
+            
+            
         </div>
 
         <div id="step-2" class="step" data-x="420" data-y="-70" data-z="-250" data-rotate-z="45" data-rotate-y="-45" data-rotate-order="zyx">
-            <p>Slide dos</p>
+           <h2>Imagen API</h2>
+            <p style="font-size: 2rem">Es un microservicio que gestiona la base de datos de imágenes. </p>
+            
         </div>
 
         <div id="step-3" class="step" data-x="700" data-y="350" data-z="-350" data-rotate-z="90" data-rotate-y="-90" data-rotate-order="zyx">
-            <img style="width: 90%;" src="img/01.jpg" alt="">
+          <h2>Galería API</h2>
+             <p style="font-size: 2rem">Microservicio que tiene implementado un cliente para facilitar la comunicación con Imágenes API.</p>
         </div>
 
         <div id="step-4" class="step" data-x="422" data-y="780" data-z="-250" data-rotate-z="135" data-rotate-y="-135" data-rotate-order="zyx">
-            <p>Slide cuatro</p>
+               <h2>Eureka Server con Ribbon</h2>
+             <p style="font-size: 2rem">Es el servidor donde están declarados todos los microservicios. Además incluye Ribbon: un servicio de balanceo de cargas que facilita el consumo de APIs en la aplicación. </p>
         </div>
 
         <div id="step-5" class="step" data-x="0" data-y="702" data-z="0" data-rotate-z="180" data-rotate-y="-180" data-rotate-order="zyx">
-            <p>Slide five</p>
+           <h2>Zuul Gateway Server</h2>
+            <p style="font-size: 2rem">Es un microservicio que gestiona las peticiones y las respuestas del sistema.</p>
         </div>
 
         <div id="step-6" class="step" data-x="379" data-y="780" data-z="270" data-rotate-z="135" data-rotate-y="-225" data-rotate-order="zyx">
-            <p>Slide cinco</p>
+            <h2>Authentication con JWT</h2>
+            <p style="font-size: 2rem">Se encarga de asegurar las peticiones que se puedan realizar, utilizando tokens.</p>
         </div>
 
         <div id="step-7" class="step" data-x="700" data-y="350" data-z="350" data-rotate-z="90" data-rotate-y="-270" data-rotate-order="zyx">
-            <p>Slide seven</p>
+             <p style="font-size: 2.5rem">Zuul interpreta y gestiona las peticiones que se puedan realizar desde el Front-End de la aplicación, actuando de intermediario con Eureka Server. </p>
         </div>
 
         <div id="step-8" class="step" data-x="379" data-y="-70" data-z="270" data-rotate-z="45" data-rotate-y="-315" data-rotate-order="zyx" data-goto-next="step-1">
-            <p>Slide eight</p>
+            <p style="font-size: 5rem">¡Gracias!</p>
         </div>
     </div>
 
