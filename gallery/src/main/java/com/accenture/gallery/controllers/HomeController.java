@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,7 @@ public class HomeController {
 	@Autowired
 	private Environment env;
 	
-	@RequestMapping("/")
+	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String home() {
 		
 		return "Hello from Gallery Service running at port: " + env.getProperty("local.server.port");
