@@ -16,15 +16,14 @@ public class Image {
 	private Long galleryId;
 	private String url;
 	
-	
 	public Image() {
 		
 	}
-	public Image(Long id, String name, String url) {
+	public Image(String name, String url, Long galleryId) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.url = url;
+		this.galleryId = galleryId;
 	}
 	public Long getId() {
 		return id;
