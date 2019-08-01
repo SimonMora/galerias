@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +34,10 @@ public class HomeController {
 	Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private Environment env;
-	@Autowired
 	private ImageService imageService;
 	
 	@PostMapping("/postImages/{id}")
-	@ApiOperation(value = "Save an image to a the db")
+	@ApiOperation(value = "Save an image to the db")
 
 	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id) throws JSONException{
 		JSONObject imgJSON = new JSONObject();

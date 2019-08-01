@@ -1,7 +1,6 @@
 package com.accenture.springEurekaImage.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -69,6 +68,7 @@ public class ImageServiceImpl implements ImageService {
 			logger.info("Imagen no encontrada");
 
 		}
+		
 		return image;
 	}
 
