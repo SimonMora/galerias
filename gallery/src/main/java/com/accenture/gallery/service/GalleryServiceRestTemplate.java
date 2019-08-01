@@ -16,7 +16,7 @@ public class GalleryServiceRestTemplate implements GalleryService{
 	private RestTemplate restTemplate;
 	
 	@Override
-	public List<Image> findByGallery(Long galleryId) {
+	public ResponseEntity<?> findByGallery(Long galleryId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

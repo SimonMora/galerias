@@ -40,7 +40,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/{id}")
-	public List<Image> verGallery(@PathVariable("id") Long id){
+	public ResponseEntity<?> verGallery(@PathVariable("id") Long id){
 		return galleryFeign.findByGallery(id);
 	}
 	

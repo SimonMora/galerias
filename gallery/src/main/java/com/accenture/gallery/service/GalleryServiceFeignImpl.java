@@ -20,7 +20,7 @@ public class GalleryServiceFeignImpl implements GalleryService {
 	
 	
 	@Override
-	public List<Image> findByGallery(Long galleryId) {
+	public ResponseEntity<?> findByGallery(Long galleryId) {
 		
 		return clientImage.getImagesByGallery(galleryId);
 	}

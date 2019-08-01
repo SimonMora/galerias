@@ -22,7 +22,7 @@ public interface ImageClientRest {
 	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id);
 	
 	@GetMapping("/images/{id}") //futuro cambio a ResponseEntity
-	public List<Image> getImagesByGallery(@PathVariable Long id);
+	ResponseEntity<?> getImagesByGallery(@PathVariable Long id);
 	
 	@PutMapping("/changeName/{id_img}")
 	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img );
