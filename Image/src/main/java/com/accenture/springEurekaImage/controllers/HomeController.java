@@ -40,6 +40,8 @@ public class HomeController {
 	private ImageService imageService;
 	
 	@PostMapping("/postImages/{id}")
+	@ApiOperation(value = "Save an image to a the db")
+
 	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id) throws JSONException{
 		JSONObject imgJSON = new JSONObject();
 		
@@ -48,12 +50,10 @@ public class HomeController {
 			imageService.save(imagen);
 			imgJSON.put("error", 0);
 			imgJSON.put("result", "OK");
-			logger.info("La imagen fue guardada exitosamente");
 			return ResponseEntity.ok().body(imgJSON.toString());
 		} else {
 			imgJSON.put("error", 1);
 			imgJSON.put("result", "La imagen no puede ser null");
-			logger.info("La imagen no pudo ser guardada");
 			return ResponseEntity.ok().body(imgJSON.toString());
 		}
 	}
@@ -78,7 +78,6 @@ public class HomeController {
 				
 				arrayImage.put(toArray);
 			}
-
 			response.put("error", 0);
 			response.put("result", arrayImage);
 		} else {
@@ -102,7 +101,6 @@ public class HomeController {
 			imageService.save(image);
 			putJson.put("error", 0);
 			putJson.put("result", "Nombre cambiado");
-			logger.info("Se pudo cambiar el nombre a la imagen");
 			return ResponseEntity.ok().body(putJson.toString());
 			
 		} else {
