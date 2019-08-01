@@ -24,13 +24,9 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public List<Image> findAll() {
 		
+		logger.info("Accediendo a la base de datos de imagen");
 		List<Image> images = repoImg.findAll();
-		if(images.size()!=0) {
-			logger.info("Lista de imagenes");
-		} else {
-			logger.info("No hay imagenes en la base de datos");
-		}
-		
+	
 		return images;
 	}
 	
@@ -38,7 +34,7 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public List<Image> findByGalleryId(Long galleryId){
 		
-		logger.info("Accediendo a imagenes");
+		logger.info("Accediendo a imagenes de una galeria");
 		return repoImg.findByGalleryId(galleryId);
 	}
 
@@ -46,7 +42,7 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public Image save(Image image) {
 		
-		logger.info("Imagen guardada");
+		logger.info("Guardando imagen");
 		return repoImg.save(image);
 	}
 
@@ -54,15 +50,8 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public Image findById(Long id) {
 		
+		logger.info("Encontrando imagen");
 		Image image = repoImg.findById(id).orElse(null);
-		if(image!=null) {
-			logger.info("Imagen encontrada");
-
-		} else {
-			logger.info("Imagen no encontrada");
-
-		}
-		
 		return image;
 	}
 
@@ -70,7 +59,7 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public void delete(Image image) {
 		
+		logger.info("Eliminando imagene");
 		repoImg.delete(image);
-		logger.info("Imagen eliminada");
 	}
 }
