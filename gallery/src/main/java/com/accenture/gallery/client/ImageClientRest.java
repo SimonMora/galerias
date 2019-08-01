@@ -21,12 +21,12 @@ public interface ImageClientRest {
 	@PostMapping("/postImages/{id}")
 	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id);
 	
-	@GetMapping("/images/{id}") //futuro cambio a Respo
+	@GetMapping("/images/{id}") //futuro cambio a ResponseEntity
 	public List<Image> getImagesByGallery(@PathVariable Long id);
 	
 	@PutMapping("/changeName/{id_img}")
-	public ResponseEntity<Object> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img );
+	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img );
 	
-	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Object> delete(@PathVariable ("id") Long id);
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable ("id") Long id);
 }

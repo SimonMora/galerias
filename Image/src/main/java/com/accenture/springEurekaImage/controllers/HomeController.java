@@ -49,7 +49,7 @@ public class HomeController {
 			imageService.save(imagen);
 			imgJSON.put("error", 0);
 			imgJSON.put("result", "OK");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			return ResponseEntity.ok().body(imageService.save(imagen));
 		} else {
 			imgJSON.put("error", 1);
 			imgJSON.put("result", "La imagen no puede ser null");
@@ -60,10 +60,10 @@ public class HomeController {
 	@GetMapping("/images/{id}")
 	@ApiOperation(value = "Retrieve a specific image")
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successful", response = Image.class))
-	public List<Image> getImagesByGallery(@PathVariable Long id) {
+	public List<Image> getImagesByGallery(@PathVariable ("id") Long id) {
 		
 		List<Image> images = imageService.findByGalleryId(id);
-		return images;
+		return images; 
 	}	
 	
 	@PutMapping("/changeName/{id_img}")
@@ -77,10 +77,9 @@ public class HomeController {
 			
 			if(image.getGalleryId()!=null) {
 				image.setName(img.getName());
-				imageService.save(image);
 				putJson.put("error", 0);
 				putJson.put("result", "Nombre cambiado");
-				return ResponseEntity.ok().body(putJson.toString());
+				return ResponseEntity.ok().body(imageService.save(image));
 			} else {
 				putJson.put("error", 2);
 				putJson.put("result", "La imagen no existe en la galeria");
@@ -97,7 +96,7 @@ public class HomeController {
 
 	@DeleteMapping("delete/{id}")
 	@ApiOperation(value = "Remove image from db")
-	public ResponseEntity<Object> delete(@PathVariable ("id") Long id) throws JSONException{
+	public ResponseEntity<?> delete(@PathVariable ("id") Long id) throws JSONException{
 		JSONObject imgJSON = new JSONObject();
 		Image img = imageService.findById(id);  
 		
@@ -105,11 +104,11 @@ public class HomeController {
 			imageService.delete(img);
 			imgJSON.put("error", 0);
 			imgJSON.put("result", "Imagen eliminada");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			return ResponseEntity.ok().body(null);
 		} else {
 			imgJSON.put("error", 1);
 			imgJSON.put("result", "La imagen no existe");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			return ResponseEntity.ok().body("La imagen no existe");
 		}
 	}
 

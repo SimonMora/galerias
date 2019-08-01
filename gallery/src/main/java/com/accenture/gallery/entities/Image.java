@@ -2,19 +2,19 @@ package com.accenture.gallery.entities;
 
 public class Image {
 	private Long id;
-	private String title;
-	private Long gallery_id;
+	private String name;
+	private Long galleryId;
 	private String url;
 	
 	
 	public Image() {
 		
 	}
-	public Image(Long id, String title, String url, Long gallery_id) {
+	public Image(Long id, String name, String url) {
+		super();
 		this.id = id;
-		this.title = title;
+		this.name = name;
 		this.url = url;
-		this.gallery_id = gallery_id;
 	}
 	public Long getId() {
 		return id;
@@ -22,11 +22,11 @@ public class Image {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getUrl() {
 		return url;
@@ -34,10 +34,11 @@ public class Image {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public Long getGallery_id() {
-		return gallery_id;
+	public Long getGalleryId() {
+		return galleryId;
 	}
-	public void setGallery_id(Long gallery_id) {
-		this.gallery_id = gallery_id;
+	public void setGalleryId(Long gallery_id) {
+		this.galleryId = gallery_id;
 	}
+	
 }
