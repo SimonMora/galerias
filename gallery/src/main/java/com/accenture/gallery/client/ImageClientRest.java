@@ -2,20 +2,31 @@ package com.accenture.gallery.client;
 
 
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.accenture.gallery.entities.Image;
 
 @FeignClient(name="image-service")
 public interface ImageClientRest {
 	
-	@GetMapping("/images")
-	public ResponseEntity<Object> getImages();
+	@PostMapping("/postImages/{id}")
+	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id);
 	
-	@PostMapping("/guardar")
-	public ResponseEntity<Object> saveImage(Image image);
-
+	@GetMapping("/images/{id}") //futuro cambio a ResponseEntity
+	ResponseEntity<?> getImagesByGallery(@PathVariable Long id);
+	
+	@PutMapping("/changeName/{id_img}")
+	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img );
+	
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable ("id") Long id);
 }
