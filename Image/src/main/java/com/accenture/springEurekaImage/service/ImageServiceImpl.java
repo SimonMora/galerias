@@ -24,9 +24,15 @@ public class ImageServiceImpl implements ImageService {
 	@Override
 	@Transactional
 	public List<Image> findAll() {
-
-		logger.info("Lista de imagenes");
-		return repoImg.findAll();
+		
+		List<Image> images = repoImg.findAll();
+		if(images.size()!=0) {
+			logger.info("Lista de imagenes");
+		} else {
+			logger.info("No hay imagenes en la base de datos");
+		}
+		
+		return images;
 	}
 	
 	@Override
