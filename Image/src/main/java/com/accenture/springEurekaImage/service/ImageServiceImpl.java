@@ -30,28 +30,44 @@ public class ImageServiceImpl implements ImageService {
 	}
 	
 	@Override
+	@Transactional
 	public List<Image> findByGalleryId(Long galleryId){
 		
-		logger.info("Imagen encontrada por galeria");
-		return repoImg.findByGalleryId(galleryId);
+		List<Image> images = repoImg.findByGalleryId(galleryId);;
+		if(images.size()!=0) {
+			logger.info("Imagenes encontradas por galeria");
+		} else {
+			logger.info("La galeria no tiene imagenes");
+		}
+		
+		return images;
 	}
 
 	@Override
 	@Transactional
 	public Image save(Image image) {
-
+		
 		logger.info("Imagen guardada");
 		return repoImg.save(image);
 	}
 
 	@Override
+	@Transactional
 	public Image findById(Long id) {
 		
-		logger.info("Imagen encontrada");
-		return repoImg.findById(id).orElse(null);
+		Image image = repoImg.findById(id).orElse(null);
+		if(image!=null) {
+			logger.info("Imagen encontrada");
+
+		} else {
+			logger.info("Imagen no encontrada");
+
+		}
+		return image;
 	}
 
 	@Override
+	@Transactional
 	public void delete(Image image) {
 		
 		repoImg.delete(image);
