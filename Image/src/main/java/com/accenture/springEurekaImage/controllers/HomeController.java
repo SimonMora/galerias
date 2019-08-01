@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiResponse;
 @RequestMapping("/")
 public class HomeController {
 
-	Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
 	private ImageService imageService;
@@ -95,7 +95,8 @@ public class HomeController {
 		
 			return ResponseEntity.ok().body(null);
 		} else {
-			return ResponseEntity.badRequest().body(null);
+			return ResponseEntity.badRequest()
+					.body(null);
 		}
 	}
 	
