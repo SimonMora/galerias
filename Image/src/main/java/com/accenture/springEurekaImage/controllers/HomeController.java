@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accenture.springEurekaImage.entities.Image;
+import com.accenture.springEurekaImage.request.RequestImage;
 import com.accenture.springEurekaImage.service.ImageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -38,92 +39,63 @@ public class HomeController {
 	
 	@PostMapping("/postImages/{id}")
 	@ApiOperation(value = "Save an image to the db")
-
-	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id) throws JSONException{
-		JSONObject imgJSON = new JSONObject();
+	public ResponseEntity<?> postImageFromGallery(RequestImage img, @PathVariable Long id){
 		
 		if (img!=null) {
 			Image imagen = new Image(img.getName(), img.getUrl(), id);
-			imageService.save(imagen);
-			imgJSON.put("error", 0);
-			imgJSON.put("result", "OK");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			
+			return ResponseEntity.ok().body(imageService.save(imagen));
 		} else {
-			imgJSON.put("error", 1);
-			imgJSON.put("result", "La imagen no puede ser null");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 	
 	@GetMapping("/images/{id}") //Recibe la id de una galeria
 	@ApiOperation(value = "Retrieve images from a specific gallery")
     @ApiResponses(value = @ApiResponse(code = 200, message = "Successful", response = Image.class))
-	public ResponseEntity<Object> getImagesByGallery(@PathVariable Long id) throws JSONException {
+	public ResponseEntity<?> getImagesByGallery(@PathVariable Long id) {
 		
-		JSONObject response = new JSONObject();
-		JSONArray arrayImage = new JSONArray();
-
 		List<Image> images = imageService.findByGalleryId(id);
-		if (images!=null) {
-			for (Image image : images) {
-				JSONObject toArray = new JSONObject();
-				
-				toArray.put("Url", image.getUrl());
-				toArray.put("Gallery Id", image.getGalleryId());
-				toArray.put("Id", image.getId());
-				toArray.put("Name", image.getName());
-				
-				arrayImage.put(toArray);
-			}
-			response.put("error", 0);
-			response.put("result", arrayImage);
+		if (images.size()!=0) {
+			
+			return ResponseEntity.ok().body(images);
 		} else {
-			response.put("error", 1);
-			response.put("result", "La galeria no tiene imagenes");
+			
+			return ResponseEntity.badRequest().body(images);
 		}
 		
-		return ResponseEntity.ok().body(response.toString());
 	}
 	
 	@PutMapping("/changeName/{id_img}")
 	@ApiOperation(value = "Change image name")
-	public ResponseEntity<Object> putChangeName(@PathVariable ("id_img") Long id_img, @RequestParam String name) throws JSONException{
+	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestParam String name){
 		
-		JSONObject putJson = new JSONObject();
 		Image image = imageService.findById(id_img);
 		
 		if (image!=null) {
 			
-			image.setName(name);
-			imageService.save(image);
-			putJson.put("error", 0);
-			putJson.put("result", "Nombre cambiado");
-			return ResponseEntity.ok().body(putJson.toString());
+			image.setName(name);			
+			return ResponseEntity.ok().body(imageService.save(image));
 			
 		} else {
-			putJson.put("error", 1);
-			putJson.put("result", "La imagen no existe");
-			logger.error("No se pudo cambiar el nombre de la imagen");
-			return ResponseEntity.ok().body(putJson.toString());
+			
+			return ResponseEntity.badRequest().body(null);
 		}		
 	}
 	
 
 	@DeleteMapping("delete/{id}")
 	@ApiOperation(value = "Remove image from db")
-	public ResponseEntity<Object> delete(@PathVariable ("id") Long id) throws JSONException{
-		JSONObject imgJSON = new JSONObject();
+	public ResponseEntity<?> delete(@PathVariable ("id") Long id){
 		Image img = imageService.findById(id);  
 		
 		if (img!=null) {
 			imageService.delete(img);
-			imgJSON.put("error", 0);
-			imgJSON.put("result", "Imagen eliminada");
-			return ResponseEntity.ok().body(imgJSON.toString());
+		
+			return ResponseEntity.ok().body(null);
 		} else {
-			imgJSON.put("error", 1);
-			imgJSON.put("result", "La imagen no existe");
-			return ResponseEntity.ok().body(imgJSON.toString());
+			return ResponseEntity.badRequest().body(null);
 		}
 	}
 	

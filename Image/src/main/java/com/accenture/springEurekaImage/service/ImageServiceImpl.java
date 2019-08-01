@@ -38,14 +38,8 @@ public class ImageServiceImpl implements ImageService {
 	@Transactional
 	public List<Image> findByGalleryId(Long galleryId){
 		
-		List<Image> images = repoImg.findByGalleryId(galleryId);;
-		if(images.size()!=0) {
-			logger.info("Imagenes encontradas por galeria");
-		} else {
-			logger.info("La galeria no tiene imagenes");
-		}
-		
-		return images;
+		logger.info("Accediendo a imagenes");
+		return repoImg.findByGalleryId(galleryId);
 	}
 
 	@Override
@@ -79,7 +73,4 @@ public class ImageServiceImpl implements ImageService {
 		repoImg.delete(image);
 		logger.info("Imagen eliminada");
 	}
-	
-	
-
 }
