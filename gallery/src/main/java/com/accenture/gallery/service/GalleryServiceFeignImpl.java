@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.accenture.gallery.client.ImageClientRest;
 import com.accenture.gallery.entities.Image;
+import com.accenture.gallery.entities.RequestImage;
 
 @Service("FeignImpl")
 public class GalleryServiceFeignImpl implements GalleryService {
@@ -26,7 +27,7 @@ public class GalleryServiceFeignImpl implements GalleryService {
 	}
 
 	@Override
-	public ResponseEntity<?> saveImage(Image img,Long galleryId) {
+	public ResponseEntity<?> saveImage(RequestImage img, Long galleryId) {
 		Object obj = new Object();
 		obj = clientImage.postImageFromGallery(img, galleryId);
 		if(obj!=null) {

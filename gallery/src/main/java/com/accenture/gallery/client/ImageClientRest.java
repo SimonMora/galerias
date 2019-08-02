@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.accenture.gallery.entities.Image;
+import com.accenture.gallery.entities.RequestImage;
 
 @FeignClient(name="image-service")
 public interface ImageClientRest {
 	
 	@PostMapping("/postImages/{id}")
-	public ResponseEntity<Object> postImageFromGallery(@RequestBody Image img, @PathVariable Long id);
+	public ResponseEntity<?> postImageFromGallery(@RequestBody RequestImage img, @PathVariable Long id);
 	
-	@GetMapping("/images/{id}") //futuro cambio a ResponseEntity
+	@GetMapping("/images/{id}")
 	ResponseEntity<?> getImagesByGallery(@PathVariable Long id);
 	
 	@PutMapping("/changeName/{id_img}")

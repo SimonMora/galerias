@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accenture.gallery.entities.Gallery;
 import com.accenture.gallery.entities.Image;
+import com.accenture.gallery.entities.RequestImage;
 import com.accenture.gallery.service.GalleryService;
 
 @RestController
@@ -40,43 +41,32 @@ public class HomeController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<?> verGallery(@PathVariable("id") Long id){
-		return galleryFeign.findByGallery(id);
+	public ResponseEntity<?> verGallery(@PathVariable("id") String id){
+		Long longId = Long.parseLong(id);
+		return galleryFeign.findByGallery(longId);
 	}
 	
 	@PostMapping("/{id}/save")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> postImage(@PathVariable ("id") Long galleryId, @RequestBody Image img){
-		
-		return galleryFeign.saveImage(img, galleryId);
+	public ResponseEntity<?> postImage(@RequestBody RequestImage img, @PathVariable ("id") String galleryId){
+		Long longId = Long.parseLong(galleryId);
+		return galleryFeign.saveImage(img, longId);
 	}
 	
 	@DeleteMapping("/image/delete/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity<?> deleteImage(@PathVariable("id")Long imgId){
-		return galleryFeign.deleteImage(imgId);
+	public ResponseEntity<?> deleteImage(@PathVariable("id") String imgId){
+		Long longId = Long.parseLong(imgId);
+		return galleryFeign.deleteImage(longId);
 	}
 	
 	@PutMapping("/image/change/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> reNameImage(@PathVariable("id") Long imgId,@RequestBody Image img){
-		return galleryFeign.changeImageName(imgId, img);
+	public ResponseEntity<?> reNameImage(@PathVariable("id") String imgId,@RequestBody Image img){
+		Long longId = Long.parseLong(imgId);
+		return galleryFeign.changeImageName(longId, img);
 	}
-	
-//	@CrossOrigin(origins = "http://localhost:4200")
-//	@RequestMapping("/{id}")
-//	public ResponseEntity<Object> getGallery(@PathVariable final Long id) {
-//		
-//		
-//		Gallery gallery = gallRepo.findById(id).orElse(null);
-//		
-//		String images;	
-//		images = restTemplate.getForObject("http://image-service/images/", String.class);
-//				
-//			
-//		return images;
-//	}
-	
+		
 	@RequestMapping("/admin")
 	@ResponseStatus(HttpStatus.ACCEPTED)
 	public String homeAdmin() {

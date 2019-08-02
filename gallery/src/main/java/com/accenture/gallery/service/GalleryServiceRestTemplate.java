@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.accenture.gallery.entities.Image;
+import com.accenture.gallery.entities.RequestImage;
 
 @Service("restTemplateImpl")
 public class GalleryServiceRestTemplate implements GalleryService{
@@ -22,7 +23,7 @@ public class GalleryServiceRestTemplate implements GalleryService{
 	}
 
 	@Override
-	public ResponseEntity<?> saveImage(Image img, Long galleryId) {
+	public ResponseEntity<?> saveImage(RequestImage img, Long galleryId) {
 		Object body = img;
 		ResponseEntity<Image> image = restTemplate.postForEntity("http://image-service/postImages/"+galleryId, body, Image.class);		
 		if(image!=null) {

@@ -31,13 +31,11 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter {
 	@Override
   	protected void configure(HttpSecurity http) throws Exception {
     	   http.cors().and()
-//    	   .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-//    	   .exceptionHandling()
-//    	   .and()
 		.csrf().disable()
 		    // make sure we use stateless session; session won't be used to store user's state.
 	 	    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) 	
 		.and()
+//		.authorizeRequests().antMatchers("/swagger-ui.html").permitAll().and()
 		    // handle an authorized attempts 
 		    .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED)) 	
 		.and()
