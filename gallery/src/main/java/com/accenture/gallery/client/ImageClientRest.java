@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accenture.gallery.entities.Image;
 import com.accenture.gallery.entities.RequestImage;
@@ -26,7 +27,7 @@ public interface ImageClientRest {
 	ResponseEntity<?> getImagesByGallery(@PathVariable Long id);
 	
 	@PutMapping("/changeName/{id_img}")
-	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img );
+	public ResponseEntity<?> putChangeName(@PathVariable ("id_img") Long id_img, @RequestBody Image img);
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable ("id") Long id);

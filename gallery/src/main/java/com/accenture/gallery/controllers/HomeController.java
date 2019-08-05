@@ -1,8 +1,5 @@
 package com.accenture.gallery.controllers;
 
-import java.util.List;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -15,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.gallery.entities.Gallery;
 import com.accenture.gallery.entities.Image;
 import com.accenture.gallery.entities.RequestImage;
 import com.accenture.gallery.service.GalleryService;
@@ -62,9 +59,9 @@ public class HomeController {
 	
 	@PutMapping("/image/change/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> reNameImage(@PathVariable("id") String imgId,@RequestBody Image img){
-		Long longId = Long.parseLong(imgId);
-		return galleryFeign.changeImageName(longId, img);
+	public ResponseEntity<?> reNameImage(@PathVariable("id") Long imgId, @RequestBody Image img){
+		
+		return galleryFeign.changeImageName(imgId, img);
 	}
 		
 	@RequestMapping("/admin")

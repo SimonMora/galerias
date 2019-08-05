@@ -1,0 +1,6 @@
+spring:
+  application:    name: config-server
+  cloud:
+         config:      server:        git:          uri: file:///C:/Users/simon.a.mora.suarez/Desktop/cConfig/        default-profile: true      discovery:        service-id: image-service
+            
+server:  port: 8888
